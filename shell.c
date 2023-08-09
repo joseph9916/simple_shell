@@ -67,20 +67,23 @@ void shexecute_file(list_t *paths)
 	while (nread > 0)
 	{
 		args = getargs(line);
-		flag = check_builtin(args[0]);
-		if (flag)
-			execute_builtin(args, line, paths, flag);
-		else
+		if (args[0])
 		{
-			if (!(check_file(args[0])))
-				execute(args);
+			flag = check_builtin(args[0]);
+			if (flag)
+				execute_builtin(args, line, paths, flag);
 			else
 			{
-				args[0] = _which(args[0], paths);
-				if (!check_file(args[0]))
+				if (!(check_file(args[0])))
 					execute(args);
 				else
-					perror("\\hsh");
+				{
+					args[0] = _which(args[0], paths);
+					if (!check_file(args[0]))
+						execute(args);
+					else
+						perror("\\hsh");
+				}
 			}
 		}
 		i++;
