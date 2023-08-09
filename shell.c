@@ -87,8 +87,6 @@ void shexecute_file(list_t *paths)
 		free_args(args);
 		nread = getline(&line, &n, stdin);
 	}
-	if (nread < 0)
-		_putchar('\n');
 	exit_free(line, paths, 0);
 }
 
