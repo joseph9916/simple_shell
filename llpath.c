@@ -12,21 +12,19 @@
 list_t *linked_paths(void)
 {
 	char *paths = _getenv("PATH");
-	char *paths_cpy;
 	char *token;
 	char delim[] = " :\n";
 	list_t *head = NULL;
 
-	paths_cpy = _strdup(paths);
-	if (!paths_cpy)
+	if (!paths)
 		return (NULL);
-	token = strtok(paths_cpy, delim);
+	token = strtok(paths, delim);
 	while (token)
 	{
 		add_node_end(&head, token);
 		token = strtok(NULL, delim);
 	}
-	free(paths_cpy);
+	free(paths);
 	return (head);
 }
 /**

@@ -12,14 +12,21 @@
 char *_getenv(char *variable)
 {
 	int i = 0;
-	char *env_var, *var, delim[] = "=";
+	char *env_var, *var, delim[] = "=", *value, *val_cpy;
 
 	while (environ[i])
 	{
 		env_var = _strdup(environ[i]);
+		if (!env_var)
+			return (NULL);
 		var = strtok(env_var, delim);
-		if (!(_strcmp(variable, var)))
-			return (strtok(NULL, delim));
+		if (var != NULL && !(_strcmp(variable, var)))
+		{
+			value = strtok(NULL, delim);
+			val_cpy = _strdup(value);
+			free(env_var);
+			return (val_cpy);
+		}
 		free(env_var);
 		i++;
 	}
